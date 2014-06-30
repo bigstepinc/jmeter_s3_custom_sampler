@@ -1,4 +1,4 @@
-#Custom JMeter sampler for authenticated Amazon S3 requests
+#Custom JMeter sampler for authenticated S3 requests
 
 This is a custom java sampler class that can be used to benchmark any S3 compatible system.
 It was tested against AWS and RIAK-CS 1.3.1.
