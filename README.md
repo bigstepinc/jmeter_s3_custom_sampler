@@ -29,11 +29,10 @@ sh ./bin/jmeter.sh
 ```
 
 Add a new jmeter Java sampler, use the com.bigstep.S3Sampler class.
-
-![Alt text](/img/jmeter1.jpg?raw=true "Select jmeter custom sampler")
+![Alt text](/bigstepinc/jmeter_s3_custom_sampler/master/img/jmeter1.png?raw=true "Select jmeter custom sampler")
 
 Add your AWS key id, bucket, object and the rest.
-![Alt text](/img/jmeter2.jpg?raw=true "Configure jmeter sampler")
+![Alt text](/bigstepinc/jmeter_s3_custom_sampler/master/img/jmeter2.png?raw=true "Configure jmeter sampler")
 
 When testing against another system then AWS use the proxy settings to redirect requests somewhere else. Please note that the requests will still have the original host header pointing to amazonaws.com but the system should handle the requests nontheless.
 
