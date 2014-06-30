@@ -2,6 +2,8 @@
 
 This is a custom java sampler class that can be used to benchmark any S3 compatible system.
 It was tested against AWS and RIAK-CS 1.3.1.
+
+Version 0.1 (alpha) 
  
 Written by: Alex Bordei @ Bigstep
 (alex at bigstep dt com)
@@ -36,5 +38,5 @@ Add your AWS key id, bucket, object and the rest.
 
 When testing against another system then AWS use the proxy settings to redirect requests somewhere else. Please note that the requests will still have the original host header pointing to amazonaws.com but the system should handle the requests nontheless.
 
-
+Only GET and PUT methods are currently implemented but others should be very easy to add. 
 
