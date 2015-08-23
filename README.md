@@ -13,22 +13,19 @@ Written by: Alex Bordei @ Bigstep
 * AWS SDK 1.8.1
 
 ##How to use
-Copy the file over inside the sources. 
-You will need to copy over ./lib/opt and ./lib. some of the jars from the SDK. You need to also copy them in both locations.For some reason the compilation works but the jars from/opt do not get distributed.
+Build using maven
 
-* aws-java-sdk-1.8.1.jar
-* jackson-annotations-2.1.1.jar
-* jackson-core-2.1.1.jar
-* jackson-databind-2.1.1.jar
-* joda-time-2.2.jar
+	mvn package
+	
+Extract zip into JMeter directory
 
-```
-ant package-only
-```
-Run jmeter as ususual from the newly created bin file. 
-```
-sh ./bin/jmeter.sh 
-```
+	cd jmeter_home
+	unzip path/to/jmeter_s3_custom_sampler/target/*.zip 
+
+Run jmeter as ususual
+ 
+	sh ./bin/jmeter.sh 
+
 
 Add a new jmeter Java sampler, use the com.bigstep.S3Sampler class.
 ![Alt text](/img/jmeter1.png?raw=true "Select jmeter custom sampler")
