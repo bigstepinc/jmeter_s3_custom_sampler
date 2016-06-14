@@ -1,6 +1,6 @@
-/* Written By Alexandru Bordei 
-*  Bigstep.com 
-*  Distrubuted under the same license as apache jmeter itself. 
+/* Written By Alexandru Bordei
+*  Bigstep.com
+*  Distrubuted under the same license as apache jmeter itself.
 * http://www.apache.org/licenses/LICENSE-2.0
 */
 package com.bigstep;
@@ -41,7 +41,8 @@ public class S3Sampler extends AbstractJavaSamplerClient implements Serializable
         defaultParameters.addArgument("secret_key", "");
         defaultParameters.addArgument("local_file_path", "");
         defaultParameters.addArgument("proxy_host", "");
-        defaultParameters.addArgument("proxy_port", "8080");
+        defaultParameters.addArgument("proxy_port", "");
+        defaultParameters.addArgument("endpoint", "");
         return defaultParameters;
     }
 
@@ -56,6 +57,7 @@ public class S3Sampler extends AbstractJavaSamplerClient implements Serializable
         String secret_key = context.getParameter("secret_key");
         String proxy_host = context.getParameter("proxy_host");
         String proxy_port = context.getParameter("proxy_port");
+        String endpoint = context.getParameter("endpoint");
 
         log.debug("runTest:method=" + method + " local_file_path=" + local_file_path + " bucket=" + bucket + " object=" + object);
 
@@ -63,16 +65,21 @@ public class S3Sampler extends AbstractJavaSamplerClient implements Serializable
         result.sampleStart(); // start stopwatch
 
         try {
-
-
             ClientConfiguration config = new ClientConfiguration();
-            config.setProxyHost(proxy_host);
-            config.setProxyPort(Integer.parseInt(proxy_port));
-            config.setProtocol(Protocol.HTTP);
+            if (proxy_host != null && !proxy_host.isEmpty()) {
+                config.setProxyHost(proxy_host);
+            }
+            if (proxy_port != null && !proxy_port.isEmpty()) {
+                config.setProxyPort(Integer.parseInt(proxy_port));
+            }
+            //config.setProtocol(Protocol.HTTP);
 
             AWSCredentials credentials = new BasicAWSCredentials(key_id, secret_key);
 
             AmazonS3 s3Client = new AmazonS3Client(credentials, config);
+            if (endpoint != null && !endpoint.isEmpty()) {
+                s3Client.setEndpoint(endpoint);
+            }
             ObjectMetadata meta = null;
 
             if (method.equals("GET")) {
@@ -82,18 +89,18 @@ public class S3Sampler extends AbstractJavaSamplerClient implements Serializable
                 S3ObjectInputStream stream = s3object.getObjectContent();
                 //while(stream.skip(1024*1024)>0);
                 stream.close();
-            }
-            if (method.equals("PUT")) {
+            } else if (method.equals("PUT")) {
                 File file = new File(local_file_path);
                 s3Client.putObject(bucket, object, file);
             }
 
             result.sampleEnd(); // stop stopwatch
             result.setSuccessful(true);
-            if (null != meta)
+            if (meta != null) {
                 result.setResponseMessage("OK on url:" + bucket + "/" + object + ". Length=" + meta.getContentLength());
-            else
+            } else {
                 result.setResponseMessage("OK on url:" + bucket + "/" + object + ".No metadata");
+            }
             result.setResponseCodeOK(); // 200 code
 
         } catch (Exception e) {
@@ -112,4 +119,3 @@ public class S3Sampler extends AbstractJavaSamplerClient implements Serializable
         return result;
     }
 }
-
