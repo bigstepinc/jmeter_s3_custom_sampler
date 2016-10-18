@@ -1,7 +1,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>bigstepinc</groupId>
-    <artifactId>jmeter-He-sampler</artifactId>
+    <artifactId>jmeter-s3-sampler</artifactId>
     <version>0.1</version>
 
     <packaging>jar</packaging>
@@ -65,9 +65,9 @@
             <version>2.1.1</version>
         </dependency>
         <dependency>
-            <groupId>com.bigstep</groupId>
-            <artifactId>Helium</artifactId>
-            <version>1.0</version>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.9.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.jmeter</groupId>
